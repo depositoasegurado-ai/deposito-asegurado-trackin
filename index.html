@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central Depósito Asegurado</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin:0;
+    padding:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    width:90%;
+    max-width:400px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+h2{
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    margin-bottom:10px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.btn1{
+    background:#25D366;
+    color:white;
+}
+
+.btn2{
+    background:#128C7E;
+    color:white;
+}
+
+.error{
+    color:red;
+    font-size:14px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Central Depósito Asegurado</h2>
+
+    <input type="text" id="guia" placeholder="Ingrese número de guía">
+    <input type="text" id="cedula" placeholder="Ingrese número de cédula">
+
+    <div class="error" id="error">
+        Debe ingresar el dato correspondiente
+    </div>
+
+    <button class="btn1" onclick="enviarGuia()">
+        Atención al Cliente (Guía)
+    </button>
+
+    <button class="btn2" onclick="enviarCedula()">
+        Chat Bot Automático (Cédula)
+    </button>
+</div>
+
+<script>
+
+function enviarGuia(){
+    var guia = document.getElementById("guia").value.trim();
+
+    if(guia === ""){
+        document.getElementById("error").style.display="block";
+        return;
+    }
+
+    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
+    var url = "https://wa.me/573508995621?text=" + mensaje;
+
+    window.open(url, "_blank");
+}
+
+function enviarCedula(){
+    var cedula = document.getElementById("cedula").value.trim();
+
+    if(cedula === ""){
+        document.getElementById("error").style.display="block";
+        return;
+    }
+
+    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ACédula: " + cedula;
+    var url = "https://wa.me/573026219839?text=" + mensaje;
+
+    window.open(url, "_blank");
+}
+
+</script>
+
+</body>
+</html>
