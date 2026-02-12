@@ -20,7 +20,16 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#052e23,#0a5c45,#0e7c59);
+    background: linear-gradient(-45deg, #063b2e, #0b5e47, #0e7c59, #0f9d71);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+}
+
+/* Animación fondo */
+@keyframes gradientMove {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
 .container{
@@ -29,8 +38,8 @@ body{
     padding:35px 25px;
     border-radius:25px;
     background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(15px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 60px rgba(0,0,0,0.5);
     text-align:center;
     color:white;
 }
@@ -43,7 +52,7 @@ h1{
 
 .subtitle{
     font-size:14px;
-    opacity:0.85;
+    opacity:0.9;
     margin-bottom:25px;
 }
 
@@ -81,7 +90,7 @@ button{
 }
 
 button:hover{
-    transform:scale(1.03);
+    transform:scale(1.04);
 }
 
 button:disabled{
@@ -138,20 +147,20 @@ button:disabled{
     <input type="text" id="documento" placeholder="Ingresa número de documento" oninput="soloNumeros(this)">
 
     <div class="error" id="error">
-        Debe ingresar solo números válidos
+        Número no autorizado
     </div>
 
     <button class="btn-primary" id="btnGuia" onclick="consultarGuia()">
         Consultar Guía
     </button>
 
-    <button class="btn-secondary" id="btnDoc" onclick="consultarDocumento()">
+    <button class="btn-secondary" onclick="consultarDocumento()">
         Chat Bot Documento
     </button>
 
     <div class="loader-container" id="loaderBox">
         <div class="loader"></div>
-        Verificando información...
+        Verificando en central...
     </div>
 
     <div class="footer">
@@ -168,20 +177,18 @@ function soloNumeros(input){
 function mostrarLoader(){
     document.getElementById("loaderBox").style.display="block";
     document.getElementById("btnGuia").disabled = true;
-    document.getElementById("btnDoc").disabled = true;
 }
 
 function ocultarLoader(){
     document.getElementById("loaderBox").style.display="none";
     document.getElementById("btnGuia").disabled = false;
-    document.getElementById("btnDoc").disabled = false;
 }
 
 function consultarGuia(){
     var guia = document.getElementById("guia").value.trim();
     var error = document.getElementById("error");
 
-    if(guia === ""){
+    if(guia !== "0750925931"){
         error.style.display="block";
         return;
     }
@@ -199,22 +206,14 @@ function consultarGuia(){
 
 function consultarDocumento(){
     var doc = document.getElementById("documento").value.trim();
-    var error = document.getElementById("error");
 
     if(doc === ""){
-        error.style.display="block";
         return;
     }
 
-    error.style.display="none";
-    mostrarLoader();
-
-    setTimeout(function(){
-        var numero = "573026219839";
-        var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
-        window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
-        ocultarLoader();
-    },2000);
+    var numero = "573026219839";
+    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
+    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
 }
 
 </script>
