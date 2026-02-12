@@ -3,80 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consultar Guía - Depósito Asegurado</title>
+<title>Central Depósito Asegurado</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+*{
     margin:0;
-    font-family:Arial, sans-serif;
-    background: linear-gradient(135deg,#0f3d2e,#0b5e3c);
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    color:white;
+    background:linear-gradient(135deg,#063b2e,#0e6b4f,#0f8a5f);
+    overflow:hidden;
 }
 
 .container{
     width:90%;
     max-width:420px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(15px);
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 0 30px rgba(0,255,150,0.4);
+    padding:35px 25px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
     text-align:center;
+    color:white;
+    animation:fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 h1{
+    font-size:28px;
+    font-weight:700;
     margin-bottom:10px;
 }
 
-p{
+.subtitle{
     font-size:14px;
-    opacity:0.9;
+    opacity:0.85;
+    margin-bottom:25px;
 }
 
 input{
     width:100%;
     padding:14px;
-    border-radius:10px;
     border:none;
-    margin-top:15px;
-    font-size:16px;
+    border-radius:14px;
+    margin-bottom:15px;
+    font-size:15px;
+    outline:none;
+    background:rgba(255,255,255,0.9);
 }
 
 button{
     width:100%;
     padding:14px;
-    margin-top:15px;
     border:none;
-    border-radius:10px;
-    font-size:16px;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:600;
     cursor:pointer;
-    font-weight:bold;
+    margin-top:10px;
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
 }
 
-.btn-guia{
-    background: linear-gradient(90deg,#00c853,#00e676);
+.btn-primary{
+    background:linear-gradient(90deg,#00c853,#00e676);
     color:white;
 }
 
-.btn-doc{
-    background: linear-gradient(90deg,#00897b,#26a69a);
+.btn-secondary{
+    background:linear-gradient(90deg,#00897b,#26a69a);
     color:white;
+}
+
+button:hover{
+    transform:scale(1.03);
 }
 
 .error{
-    margin-top:10px;
-    color:#ff5252;
+    font-size:13px;
+    color:#ffb3b3;
     display:none;
-    font-size:14px;
+    margin-bottom:10px;
 }
 
-.loading{
-    margin-top:15px;
-    display:none;
+.footer{
+    margin-top:20px;
+    font-size:11px;
+    opacity:0.7;
 }
 </style>
 </head>
@@ -85,72 +112,64 @@ button{
 
 <div class="container">
     <h1>Consultar guía</h1>
-    <p>Consulta el estado de tu envío con depósito asegurado</p>
+    <div class="subtitle">
+        Consulta el estado de tu envío con depósito asegurado
+    </div>
 
     <input type="text" id="guia" placeholder="Ingresa número de guía">
     <input type="text" id="documento" placeholder="Ingresa número de documento">
 
-    <div class="error" id="error"></div>
-    <div class="loading" id="loading">Verificando guía...</div>
+    <div class="error" id="error">
+        Debe ingresar el dato correspondiente
+    </div>
 
-    <button class="btn-guia" onclick="enviarGuia()">
+    <button class="btn-primary" onclick="consultarGuia()">
         Consultar Guía
     </button>
 
-    <button class="btn-doc" onclick="enviarDocumento()">
+    <button class="btn-secondary" onclick="consultarDocumento()">
         Chat Bot Documento
     </button>
+
+    <div class="footer">
+        Servicio exclusivo depósito asegurado
+    </div>
 </div>
 
 <script>
-
-function enviarGuia(){
+function consultarGuia(){
     var guia = document.getElementById("guia").value.trim();
-    var guiaAutorizada = "0750925931";
     var error = document.getElementById("error");
-    var loading = document.getElementById("loading");
-
-    error.style.display="none";
 
     if(guia === ""){
-        error.innerText="Debe ingresar número de guía";
         error.style.display="block";
         return;
     }
-
-    if(guia !== guiaAutorizada){
-        error.innerText="Guía no autorizada";
-        error.style.display="block";
-        return;
-    }
-
-    loading.style.display="block";
-
-    setTimeout(function(){
-        var mensaje="Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: "+guia;
-        var url="https://wa.me/573508995621?text="+mensaje;
-        window.open(url,"_blank");
-        loading.style.display="none";
-    },1500);
-}
-
-function enviarDocumento(){
-    var documento=document.getElementById("documento").value.trim();
-    var error=document.getElementById("error");
 
     error.style.display="none";
 
-    if(documento===""){
-        error.innerText="Debe ingresar número de documento";
+    var numero = "573508995621";
+    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
+
+    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+}
+
+function consultarDocumento(){
+    var doc = document.getElementById("documento").value.trim();
+    var error = document.getElementById("error");
+
+    if(doc === ""){
         error.style.display="block";
         return;
     }
 
-    var mensaje="Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: "+documento;
-    var url="https://wa.me/573026219839?text="+mensaje;
-    window.open(url,"_blank");
-}
+    error.style.display="none";
 
+    var numero = "573026219839";
+    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
+
+    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+}
 </script>
 
 </body>
