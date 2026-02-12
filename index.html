@@ -3,68 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central Depósito Asegurado</title>
+<title>Consultar Guía - Depósito Asegurado</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background: #f4f6f9;
     margin:0;
-    padding:0;
+    font-family:Arial, sans-serif;
+    background: linear-gradient(135deg,#0f3d2e,#0b5e3c);
     display:flex;
     justify-content:center;
     align-items:center;
     height:100vh;
+    color:white;
 }
 
 .container{
-    background:white;
-    padding:30px;
     width:90%;
-    max-width:400px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    max-width:420px;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(15px);
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(0,255,150,0.4);
     text-align:center;
 }
 
-h2{
-    margin-bottom:20px;
+h1{
+    margin-bottom:10px;
+}
+
+p{
+    font-size:14px;
+    opacity:0.9;
 }
 
 input{
     width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    margin-bottom:15px;
+    padding:14px;
+    border-radius:10px;
+    border:none;
+    margin-top:15px;
     font-size:16px;
 }
 
 button{
     width:100%;
-    padding:12px;
-    margin-top:10px;
+    padding:14px;
+    margin-top:15px;
     border:none;
-    border-radius:8px;
+    border-radius:10px;
     font-size:16px;
     cursor:pointer;
+    font-weight:bold;
 }
 
-.btn1{
-    background:#25D366;
+.btn-guia{
+    background: linear-gradient(90deg,#00c853,#00e676);
     color:white;
 }
 
-.btn2{
-    background:#128C7E;
+.btn-doc{
+    background: linear-gradient(90deg,#00897b,#26a69a);
     color:white;
 }
 
 .error{
-    color:red;
-    font-size:14px;
-    display:none;
     margin-top:10px;
+    color:#ff5252;
+    display:none;
+    font-size:14px;
+}
+
+.loading{
+    margin-top:15px;
+    display:none;
 }
 </style>
 </head>
@@ -72,71 +84,71 @@ button{
 <body>
 
 <div class="container">
-    <h2>Central Depósito Asegurado</h2>
+    <h1>Consultar guía</h1>
+    <p>Consulta el estado de tu envío con depósito asegurado</p>
 
-    <!-- Campo Guía -->
-    <input type="text" id="guia" placeholder="Ingrese número de guía">
-
-    <!-- Campo Documento -->
-    <input type="text" id="documento" placeholder="Ingrese número de documento">
+    <input type="text" id="guia" placeholder="Ingresa número de guía">
+    <input type="text" id="documento" placeholder="Ingresa número de documento">
 
     <div class="error" id="error"></div>
+    <div class="loading" id="loading">Verificando guía...</div>
 
-    <button class="btn1" onclick="enviarGuia()">
-        Atención al Cliente (Guía)
+    <button class="btn-guia" onclick="enviarGuia()">
+        Consultar Guía
     </button>
 
-    <button class="btn2" onclick="enviarDocumento()">
-        Chat Bot Automático (Documento)
+    <button class="btn-doc" onclick="enviarDocumento()">
+        Chat Bot Documento
     </button>
 </div>
 
 <script>
 
-// 🔒 BOTÓN GUÍA (solo código autorizado)
 function enviarGuia(){
     var guia = document.getElementById("guia").value.trim();
     var guiaAutorizada = "0750925931";
     var error = document.getElementById("error");
+    var loading = document.getElementById("loading");
 
-    error.style.display = "none";
+    error.style.display="none";
 
     if(guia === ""){
-        error.innerText = "Debe ingresar número de guía";
-        error.style.display = "block";
+        error.innerText="Debe ingresar número de guía";
+        error.style.display="block";
         return;
     }
 
     if(guia !== guiaAutorizada){
-        error.innerText = "Guía no autorizada";
-        error.style.display = "block";
+        error.innerText="Guía no autorizada";
+        error.style.display="block";
         return;
     }
 
-    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
-    var url = "https://wa.me/573508995621?text=" + mensaje;
+    loading.style.display="block";
 
-    window.open(url, "_blank");
+    setTimeout(function(){
+        var mensaje="Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: "+guia;
+        var url="https://wa.me/573508995621?text="+mensaje;
+        window.open(url,"_blank");
+        loading.style.display="none";
+    },1500);
 }
 
-
-// 🪪 BOTÓN DOCUMENTO (sin restricción)
 function enviarDocumento(){
-    var documento = document.getElementById("documento").value.trim();
-    var error = document.getElementById("error");
+    var documento=document.getElementById("documento").value.trim();
+    var error=document.getElementById("error");
 
-    error.style.display = "none";
+    error.style.display="none";
 
-    if(documento === ""){
-        error.innerText = "Debe ingresar número de documento";
-        error.style.display = "block";
+    if(documento===""){
+        error.innerText="Debe ingresar número de documento";
+        error.style.display="block";
         return;
     }
 
-    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + documento;
-    var url = "https://wa.me/573026219839?text=" + mensaje;
-
-    window.open(url, "_blank");
+    var mensaje="Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: "+documento;
+    var url="https://wa.me/573026219839?text="+mensaje;
+    window.open(url,"_blank");
 }
 
 </script>
