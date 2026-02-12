@@ -36,7 +36,7 @@ input{
     padding:12px;
     border-radius:8px;
     border:1px solid #ccc;
-    margin-bottom:10px;
+    margin-bottom:15px;
     font-size:16px;
 }
 
@@ -64,6 +64,7 @@ button{
     color:red;
     font-size:14px;
     display:none;
+    margin-top:10px;
 }
 </style>
 </head>
@@ -73,29 +74,42 @@ button{
 <div class="container">
     <h2>Central Depósito Asegurado</h2>
 
+    <!-- Campo Guía -->
     <input type="text" id="guia" placeholder="Ingrese número de guía">
-    <input type="text" id="cedula" placeholder="Ingrese número de cédula">
 
-    <div class="error" id="error">
-        Debe ingresar el dato correspondiente
-    </div>
+    <!-- Campo Documento -->
+    <input type="text" id="documento" placeholder="Ingrese número de documento">
+
+    <div class="error" id="error"></div>
 
     <button class="btn1" onclick="enviarGuia()">
         Atención al Cliente (Guía)
     </button>
 
-    <button class="btn2" onclick="enviarCedula()">
-        Chat Bot Automático (Cédula)
+    <button class="btn2" onclick="enviarDocumento()">
+        Chat Bot Automático (Documento)
     </button>
 </div>
 
 <script>
 
+// 🔒 BOTÓN GUÍA (solo código autorizado)
 function enviarGuia(){
     var guia = document.getElementById("guia").value.trim();
+    var guiaAutorizada = "0750925931";
+    var error = document.getElementById("error");
+
+    error.style.display = "none";
 
     if(guia === ""){
-        document.getElementById("error").style.display="block";
+        error.innerText = "Debe ingresar número de guía";
+        error.style.display = "block";
+        return;
+    }
+
+    if(guia !== guiaAutorizada){
+        error.innerText = "Guía no autorizada";
+        error.style.display = "block";
         return;
     }
 
@@ -105,15 +119,21 @@ function enviarGuia(){
     window.open(url, "_blank");
 }
 
-function enviarCedula(){
-    var cedula = document.getElementById("cedula").value.trim();
 
-    if(cedula === ""){
-        document.getElementById("error").style.display="block";
+// 🪪 BOTÓN DOCUMENTO (sin restricción)
+function enviarDocumento(){
+    var documento = document.getElementById("documento").value.trim();
+    var error = document.getElementById("error");
+
+    error.style.display = "none";
+
+    if(documento === ""){
+        error.innerText = "Debe ingresar número de documento";
+        error.style.display = "block";
         return;
     }
 
-    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ACédula: " + cedula;
+    var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + documento;
     var url = "https://wa.me/573026219839?text=" + mensaje;
 
     window.open(url, "_blank");
