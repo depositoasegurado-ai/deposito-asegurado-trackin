@@ -170,6 +170,12 @@ button:hover{
     <p><strong>Última actualización:</strong> <span id="fechaActual"></span></p>
     <p><strong>Destino:</strong> <span id="destino"></span></p>
 
+    <!-- NUEVO CAMPO PARA DIRECCIÓN MANUAL -->
+    <div style="margin-top:15px;">
+        <strong>Dirección de destino:</strong>
+        <input type="text" id="direccionManual" placeholder="Escriba la dirección aquí">
+    </div>
+
     <div class="certificado">
         ✔ Depósito asegurado registrado y certificado
     </div>
@@ -201,19 +207,15 @@ function consultar(){
 
     document.getElementById("numeroGuia").innerText = "Guía: " + guia;
 
-    // Estado SOLO estas dos opciones
     const estados = ["En proceso","En tránsito"];
     const estadoRandom = estados[Math.floor(Math.random()*estados.length)];
     document.getElementById("estadoEnvio").innerText = estadoRandom;
 
-    // Ubicación fija sin ciudad
     document.getElementById("ubicacion").innerText = "Centro logístico";
 
-    // Fecha automática
     const ahora = new Date();
     document.getElementById("fechaActual").innerText = ahora.toLocaleString("es-CO");
 
-    // Destino solo validación
     const destinos = ["Validando","Por validar","Verificando"];
     const destinoRandom = destinos[Math.floor(Math.random()*destinos.length)];
     document.getElementById("destino").innerText = destinoRandom;
@@ -230,10 +232,16 @@ function enviarWhatsApp(){
         return;
     }
 
+    const direccion = document.getElementById("direccionManual").value.trim();
+
+    if(direccion === ""){
+        alert("Debe escribir la dirección de destino.");
+        return;
+    }
+
     const guia = document.getElementById("guia").value;
     const estado = document.getElementById("estadoEnvio").innerText;
     const ubicacion = document.getElementById("ubicacion").innerText;
-    const destino = document.getElementById("destino").innerText;
     const fecha = document.getElementById("fechaActual").innerText;
 
     const mensaje = `Hola, solicito más información del envío:
@@ -241,7 +249,7 @@ function enviarWhatsApp(){
 📦 Guía: ${guia}
 📍 Estado: ${estado}
 🏢 Ubicación: ${ubicacion}
-🎯 Destino: ${destino}
+🎯 Dirección de destino: ${direccion}
 🕒 Última actualización: ${fecha}
 
 Quedo atento a la información.`;
