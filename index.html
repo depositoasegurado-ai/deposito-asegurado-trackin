@@ -28,7 +28,6 @@ body{
 }
 
 .header{
-    text-align:left;
     margin-bottom:25px;
 }
 
@@ -71,18 +70,6 @@ body{
     margin-bottom:20px;
 }
 
-.card h2{
-    font-size:20px;
-    margin-bottom:8px;
-    color:#1f2d3d;
-}
-
-.card p{
-    font-size:14px;
-    color:#6c7a89;
-    margin-bottom:18px;
-}
-
 .input-group{
     display:flex;
     gap:10px;
@@ -93,7 +80,6 @@ input{
     padding:14px;
     border-radius:10px;
     border:1px solid #dfe6e9;
-    font-size:14px;
 }
 
 button{
@@ -104,7 +90,6 @@ button{
     border-radius:10px;
     cursor:pointer;
     font-weight:600;
-    transition:0.2s;
 }
 
 button:hover{
@@ -113,54 +98,13 @@ button:hover{
 
 .result{
     display:none;
-    opacity:0;
-    transform:translateY(10px);
-    transition:all 0.3s ease;
-}
-
-.guide-number{
-    font-size:14px;
-    color:#6c7a89;
-    margin-bottom:15px;
 }
 
 .status-box{
-    background:linear-gradient(to right,#e8f5ee,#f5faf7);
+    background:#e8f5ee;
     padding:15px;
     border-radius:12px;
     margin-bottom:15px;
-}
-
-.status-title{
-    font-size:14px;
-    color:#1f2d3d;
-}
-
-.status-value{
-    font-size:18px;
-    font-weight:700;
-    color:#1f7a4d;
-}
-
-.info-row{
-    padding:12px 0;
-    border-bottom:1px solid #ecf0f1;
-}
-
-.info-row:last-child{
-    border-bottom:none;
-}
-
-.info-title{
-    font-size:13px;
-    color:#6c7a89;
-}
-
-.info-value{
-    font-size:15px;
-    font-weight:600;
-    color:#1f2d3d;
-    margin-top:3px;
 }
 
 .certificado{
@@ -168,7 +112,6 @@ button:hover{
     background:#e8f5ee;
     padding:12px;
     border-radius:10px;
-    font-size:14px;
     font-weight:600;
     color:#1f7a4d;
     text-align:center;
@@ -184,18 +127,12 @@ button:hover{
     border:none;
     border-radius:12px;
     cursor:pointer;
-    font-size:15px;
-}
-
-.btn-whatsapp:hover{
-    opacity:0.9;
 }
 
 .error{
-    color:#e74c3c;
+    color:red;
     font-weight:600;
     margin-top:10px;
-    font-size:14px;
 }
 </style>
 </head>
@@ -204,113 +141,96 @@ button:hover{
 
 <div class="container">
 
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">📦</div>
-            <div class="logo-text">Central Depósito Seguro</div>
-        </div>
-        <div class="subtext">Seguimiento y gestión de envíos</div>
+<div class="header">
+    <div class="logo">
+        <div class="logo-icon">📦</div>
+        <div class="logo-text">Central Depósito Seguro</div>
+    </div>
+    <div class="subtext">Seguimiento y gestión de envíos</div>
+</div>
+
+<div class="card">
+    <h3>Consultar envío</h3>
+    <div class="input-group">
+        <input type="text" id="guia" placeholder="Número de guía">
+        <button onclick="consultar()">Consultar</button>
+    </div>
+    <div id="errorMensaje" class="error"></div>
+</div>
+
+<div class="card result" id="resultado">
+
+    <div id="numeroGuia"></div>
+
+    <div class="status-box">
+        <strong>Estado:</strong> <span id="estadoEnvio"></span>
     </div>
 
-    <div class="card">
-        <h2>Consultar envío</h2>
-        <p>Ingresa el número de guía para consultar el estado del envío</p>
+    <p><strong>Ubicación actual:</strong> <span id="ubicacion"></span></p>
+    <p><strong>Última actualización:</strong> <span id="fechaActual"></span></p>
+    <p><strong>Destino:</strong> <span id="destino"></span></p>
 
-        <div class="input-group">
-            <input type="text" id="guia" placeholder="Número de guía">
-            <button onclick="consultar()">Consultar envío</button>
-        </div>
-
-        <div id="errorMensaje" class="error"></div>
+    <div class="certificado">
+        ✔ Depósito asegurado registrado y certificado
     </div>
 
-    <div class="card result" id="resultado">
+    <button class="btn-whatsapp" onclick="enviarWhatsApp()">
+        Más información por WhatsApp
+    </button>
 
-        <div class="guide-number" id="numeroGuia"></div>
-
-        <div class="status-box">
-            <div class="status-title">Estado del envío</div>
-            <div class="status-value" id="estadoEnvio"></div>
-        </div>
-
-        <div class="info-row">
-            <div class="info-title">Ubicación actual</div>
-            <div class="info-value" id="ubicacion">Centro logístico – Bogotá</div>
-        </div>
-
-        <div class="info-row">
-            <div class="info-title">Última actualización</div>
-            <div class="info-value" id="fechaActual"></div>
-        </div>
-
-        <div class="info-row">
-            <div class="info-title">Destino</div>
-            <div class="info-value" id="destino">Medellín</div>
-        </div>
-
-        <div class="certificado">
-            ✔ Depósito asegurado registrado y certificado
-        </div>
-
-        <button class="btn-whatsapp" onclick="enviarWhatsApp()">
-            Más información por WhatsApp
-        </button>
-
-    </div>
+</div>
 
 </div>
 
 <script>
 
-const guiaSegura = "MDc1MDkyNTkzMQ=="; // 0750925931 codificada
-
-const input = document.getElementById("guia");
-const resultado = document.getElementById("resultado");
-const errorDiv = document.getElementById("errorMensaje");
+const guiaAutorizada = "0750925931";
 
 function consultar(){
 
-    const guia = input.value.trim();
+    const guia = document.getElementById("guia").value.trim();
+    const errorDiv = document.getElementById("errorMensaje");
 
-    if(guia === ""){
-        mostrarError("Ingrese un número de guía");
+    if(guia !== guiaAutorizada){
+        errorDiv.innerText = "Guía no autorizada";
+        document.getElementById("resultado").style.display = "none";
         return;
     }
 
-    if(btoa(guia) !== guiaSegura){
-        mostrarError("Guía no autorizada");
-        resultado.style.display = "none";
-        return;
-    }
-
-    limpiarError();
+    errorDiv.innerText = "";
 
     document.getElementById("numeroGuia").innerText = "Guía: " + guia;
 
-    const estados = ["En tránsito","En proceso logístico","Verificación de depósito"];
-    const estadoAleatorio = estados[Math.floor(Math.random()*estados.length)];
-    document.getElementById("estadoEnvio").innerText = estadoAleatorio;
+    // Estado SOLO estas dos opciones
+    const estados = ["En proceso","En tránsito"];
+    const estadoRandom = estados[Math.floor(Math.random()*estados.length)];
+    document.getElementById("estadoEnvio").innerText = estadoRandom;
 
+    // Ubicación fija sin ciudad
+    document.getElementById("ubicacion").innerText = "Centro logístico";
+
+    // Fecha automática
     const ahora = new Date();
     document.getElementById("fechaActual").innerText = ahora.toLocaleString("es-CO");
 
-    resultado.style.display = "block";
+    // Destino solo validación
+    const destinos = ["Validando","Por validar","Verificando"];
+    const destinoRandom = destinos[Math.floor(Math.random()*destinos.length)];
+    document.getElementById("destino").innerText = destinoRandom;
 
-    setTimeout(()=>{
-        resultado.style.opacity = "1";
-        resultado.style.transform = "translateY(0)";
-    },50);
+    document.getElementById("resultado").style.display = "block";
 }
 
 function enviarWhatsApp(){
 
-    const guia = input.value.trim();
+    const confirmacion = prompt("Ingrese nuevamente la guía autorizada:");
 
-    if(btoa(guia) !== guiaSegura){
-        mostrarError("Validación requerida antes de continuar");
+    if(confirmacion !== guiaAutorizada){
+        alert("Guía incorrecta. Acceso denegado.");
         return;
     }
 
+    const guia = document.getElementById("guia").value;
     const estado = document.getElementById("estadoEnvio").innerText;
     const ubicacion = document.getElementById("ubicacion").innerText;
     const destino = document.getElementById("destino").innerText;
@@ -331,18 +251,6 @@ Quedo atento a la información.`;
 
     window.open(url, "_blank");
 }
-
-function mostrarError(texto){
-    errorDiv.innerText = texto;
-}
-
-function limpiarError(){
-    errorDiv.innerText = "";
-}
-
-input.addEventListener("paste", function(e){
-    e.preventDefault();
-});
 
 </script>
 
