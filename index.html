@@ -113,6 +113,9 @@ button:hover{
 
 .result{
     display:none;
+    opacity:0;
+    transform:translateY(10px);
+    transition:all 0.3s ease;
 }
 
 .guide-number{
@@ -187,6 +190,13 @@ button:hover{
 .btn-whatsapp:hover{
     opacity:0.9;
 }
+
+.error{
+    color:#e74c3c;
+    font-weight:600;
+    margin-top:10px;
+    font-size:14px;
+}
 </style>
 </head>
 
@@ -210,6 +220,8 @@ button:hover{
             <input type="text" id="guia" placeholder="Número de guía">
             <button onclick="consultar()">Consultar envío</button>
         </div>
+
+        <div id="errorMensaje" class="error"></div>
     </div>
 
     <div class="card result" id="resultado">
@@ -218,7 +230,7 @@ button:hover{
 
         <div class="status-box">
             <div class="status-title">Estado del envío</div>
-            <div class="status-value" id="estadoEnvio">En tránsito</div>
+            <div class="status-value" id="estadoEnvio"></div>
         </div>
 
         <div class="info-row">
@@ -249,23 +261,56 @@ button:hover{
 </div>
 
 <script>
+
+const guiaSegura = "MDc1MDkyNTkzMQ=="; // 0750925931 codificada
+
+const input = document.getElementById("guia");
+const resultado = document.getElementById("resultado");
+const errorDiv = document.getElementById("errorMensaje");
+
 function consultar(){
-    const guia = document.getElementById("guia").value.trim();
+
+    const guia = input.value.trim();
+
     if(guia === ""){
-        alert("Ingrese un número de guía");
+        mostrarError("Ingrese un número de guía");
         return;
     }
 
+    if(btoa(guia) !== guiaSegura){
+        mostrarError("Guía no autorizada");
+        resultado.style.display = "none";
+        return;
+    }
+
+    limpiarError();
+
     document.getElementById("numeroGuia").innerText = "Guía: " + guia;
+
+    const estados = ["En tránsito","En proceso logístico","Verificación de depósito"];
+    const estadoAleatorio = estados[Math.floor(Math.random()*estados.length)];
+    document.getElementById("estadoEnvio").innerText = estadoAleatorio;
 
     const ahora = new Date();
     document.getElementById("fechaActual").innerText = ahora.toLocaleString("es-CO");
 
-    document.getElementById("resultado").style.display = "block";
+    resultado.style.display = "block";
+
+    setTimeout(()=>{
+        resultado.style.opacity = "1";
+        resultado.style.transform = "translateY(0)";
+    },50);
 }
 
 function enviarWhatsApp(){
-    const guia = document.getElementById("guia").value;
+
+    const guia = input.value.trim();
+
+    if(btoa(guia) !== guiaSegura){
+        mostrarError("Validación requerida antes de continuar");
+        return;
+    }
+
     const estado = document.getElementById("estadoEnvio").innerText;
     const ubicacion = document.getElementById("ubicacion").innerText;
     const destino = document.getElementById("destino").innerText;
@@ -286,6 +331,19 @@ Quedo atento a la información.`;
 
     window.open(url, "_blank");
 }
+
+function mostrarError(texto){
+    errorDiv.innerText = texto;
+}
+
+function limpiarError(){
+    errorDiv.innerText = "";
+}
+
+input.addEventListener("paste", function(e){
+    e.preventDefault();
+});
+
 </script>
 
 </body>
