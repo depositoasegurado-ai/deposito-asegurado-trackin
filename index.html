@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central Depósito Asegurado</title>
+<title>Central Depósito Seguro</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -12,120 +12,167 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins', sans-serif;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-    height:100vh;
+    background:#f4f6f8;
     display:flex;
     justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#002b36,#004d40,#00695c);
+    padding:30px 15px;
 }
 
 .container{
-    width:90%;
-    max-width:420px;
-    padding:35px 25px;
-    border-radius:25px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(15px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.4);
-    text-align:center;
-    color:white;
+    width:100%;
+    max-width:520px;
 }
 
-.logo{
-    font-size:42px;
-    margin-bottom:15px;
-}
-
-h1{
-    font-size:26px;
-    font-weight:700;
-    margin-bottom:8px;
-}
-
-.subtitle{
-    font-size:14px;
-    opacity:0.85;
+/* HEADER */
+.header{
+    text-align:left;
     margin-bottom:25px;
 }
 
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-icon{
+    width:45px;
+    height:45px;
+    background:#1f7a4d;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:22px;
+    font-weight:700;
+    color:#1f2d3d;
+}
+
+.subtext{
+    color:#6c7a89;
+    font-size:14px;
+    margin-top:4px;
+}
+
+/* CARD */
+.card{
+    background:white;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.06);
+    margin-bottom:20px;
+}
+
+.card h2{
+    font-size:20px;
+    margin-bottom:8px;
+    color:#1f2d3d;
+}
+
+.card p{
+    font-size:14px;
+    color:#6c7a89;
+    margin-bottom:18px;
+}
+
+/* INPUT */
+.input-group{
+    display:flex;
+    gap:10px;
+}
+
 input{
-    width:100%;
+    flex:1;
     padding:14px;
-    border:none;
-    border-radius:14px;
-    margin-bottom:15px;
-    font-size:15px;
-    outline:none;
-    background:rgba(255,255,255,0.95);
-}
-
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-    margin-top:10px;
-    transition:0.3s;
-}
-
-.btn-primary{
-    background:linear-gradient(90deg,#ff6f00,#ff8f00);
-    color:white;
-}
-
-.btn-secondary{
-    background:linear-gradient(90deg,#004d40,#00796b);
-    color:white;
-}
-
-button:hover{
-    transform:scale(1.03);
-}
-
-button:disabled{
-    opacity:0.6;
-    cursor:not-allowed;
-}
-
-.error{
-    font-size:13px;
-    color:#ffb3b3;
-    display:none;
-    margin-bottom:10px;
-}
-
-.loader-container{
-    display:none;
-    margin-top:15px;
+    border-radius:10px;
+    border:1px solid #dfe6e9;
     font-size:14px;
 }
 
-.loader{
-    width:22px;
-    height:22px;
-    border:3px solid rgba(255,255,255,0.3);
-    border-top:3px solid white;
-    border-radius:50%;
-    margin:10px auto;
-    animation:spin 1s linear infinite;
+button{
+    background:#1f7a4d;
+    color:white;
+    border:none;
+    padding:14px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.2s;
 }
 
-@keyframes spin{
-    0%{transform:rotate(0deg);}
-    100%{transform:rotate(360deg);}
+button:hover{
+    background:#16663f;
 }
 
-.footer{
-    margin-top:20px;
-    font-size:11px;
-    opacity:0.7;
+/* RESULT */
+.result{
+    display:none;
+}
+
+.guide-number{
+    font-size:14px;
+    color:#6c7a89;
+    margin-bottom:15px;
+}
+
+.status-box{
+    background:linear-gradient(to right,#e8f5ee,#f5faf7);
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.status-title{
+    font-size:14px;
+    color:#1f2d3d;
+}
+
+.status-value{
+    font-size:18px;
+    font-weight:700;
+    color:#1f7a4d;
+}
+
+.info-row{
+    padding:12px 0;
+    border-bottom:1px solid #ecf0f1;
+}
+
+.info-row:last-child{
+    border-bottom:none;
+}
+
+.info-title{
+    font-size:13px;
+    color:#6c7a89;
+}
+
+.info-value{
+    font-size:15px;
+    font-weight:600;
+    color:#1f2d3d;
+    margin-top:3px;
+}
+
+.certificado{
+    margin-top:15px;
+    background:#e8f5ee;
+    padding:12px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    color:#1f7a4d;
+    text-align:center;
 }
 </style>
 </head>
@@ -134,134 +181,71 @@ button:disabled{
 
 <div class="container">
 
-    <div class="logo">📦</div>
-
-    <h1>Consultar guía</h1>
-    <div class="subtitle">
-        Plataforma segura de verificación depósito asegurado
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">📦</div>
+            <div class="logo-text">Central Depósito Seguro</div>
+        </div>
+        <div class="subtext">Seguimiento y gestión de envíos</div>
     </div>
 
-    <input type="text" id="guia" placeholder="Ingresa número de guía" oninput="soloNumeros(this)">
-    <input type="text" id="documento" placeholder="Ingresa número de documento" oninput="soloNumeros(this)">
+    <div class="card">
+        <h2>Consultar envío</h2>
+        <p>Ingresa el número de guía para consultar el estado del envío</p>
 
-    <div class="error" id="error"></div>
-
-    <button class="btn-primary" id="btnGuia" onclick="consultarGuia()">
-        Consultar Guía
-    </button>
-
-    <button class="btn-secondary" id="btnDoc" onclick="consultarDocumento()">
-        Chat Bot Documento
-    </button>
-
-    <div class="loader-container" id="loaderBox">
-        <div class="loader"></div>
-        Verificando información...
+        <div class="input-group">
+            <input type="text" id="guia" placeholder="Número de guía">
+            <button onclick="consultar()">Consultar envío</button>
+        </div>
     </div>
 
-    <div class="footer">
-        Servicio exclusivo • Canal oficial WhatsApp
+    <div class="card result" id="resultado">
+
+        <div class="guide-number" id="numeroGuia"></div>
+
+        <div class="status-box">
+            <div class="status-title">Estado del envío</div>
+            <div class="status-value">En tránsito</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-title">Ubicación actual</div>
+            <div class="info-value">Centro logístico – Bogotá</div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-title">Última actualización</div>
+            <div class="info-value" id="fechaActual"></div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-title">Destino</div>
+            <div class="info-value">Medellín</div>
+        </div>
+
+        <div class="certificado">
+            ✔ Depósito asegurado registrado y certificado
+        </div>
+
     </div>
 
 </div>
 
 <script>
-
-const numeroWhatsApp = "573026219839";
-const guiaValida = "0750925931";
-
-function soloNumeros(input){
-    input.value = input.value.replace(/[^0-9]/g,'');
-}
-
-function mostrarLoader(){
-    document.getElementById("loaderBox").style.display="block";
-    document.getElementById("btnGuia").disabled = true;
-    document.getElementById("btnDoc").disabled = true;
-}
-
-function ocultarLoader(){
-    document.getElementById("loaderBox").style.display="none";
-    document.getElementById("btnGuia").disabled = false;
-    document.getElementById("btnDoc").disabled = false;
-}
-
-function obtenerUbicacion(callback){
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(position){
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            callback("Ubicación aproximada: https://maps.google.com/?q=" + lat + "," + lon);
-        }, function(){
-            callback("Ubicación no disponible");
-        });
-    }else{
-        callback("Ubicación no soportada");
-    }
-}
-
-function consultarGuia(){
-    var guia = document.getElementById("guia").value.trim();
-    var error = document.getElementById("error");
-
-    if(guia !== guiaValida){
-        error.innerText = "Número de guía inválido";
-        error.style.display="block";
+function consultar(){
+    const guia = document.getElementById("guia").value;
+    if(guia === ""){
+        alert("Ingrese un número de guía");
         return;
     }
 
-    error.style.display="none";
-    mostrarLoader();
+    document.getElementById("numeroGuia").innerText = "Guía: " + guia;
 
-    obtenerUbicacion(function(ubicacion){
+    const ahora = new Date();
+    document.getElementById("fechaActual").innerText = ahora.toLocaleString("es-CO");
 
-        setTimeout(function(){
-
-            var mensaje = "📦 CONSULTA DEPÓSITO ASEGURADO%0A"
-                        + "Guía: " + guia + "%0A"
-                        + ubicacion + "%0A"
-                        + "Fecha: " + new Date().toLocaleString();
-
-            window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
-
-            ocultarLoader();
-
-        },1500);
-
-    });
+    document.getElementById("resultado").style.display = "block";
 }
-
-function consultarDocumento(){
-    var doc = document.getElementById("documento").value.trim();
-    var error = document.getElementById("error");
-
-    if(doc === ""){
-        error.innerText = "Debe ingresar un número válido";
-        error.style.display="block";
-        return;
-    }
-
-    error.style.display="none";
-    mostrarLoader();
-
-    obtenerUbicacion(function(ubicacion){
-
-        setTimeout(function(){
-
-            var mensaje = "📦 CONSULTA DEPÓSITO ASEGURADO%0A"
-                        + "Documento: " + doc + "%0A"
-                        + ubicacion + "%0A"
-                        + "Fecha: " + new Date().toLocaleString();
-
-            window.open("https://wa.me/" + numeroWhatsApp + "?text=" + mensaje, "_blank");
-
-            ocultarLoader();
-
-        },1500);
-
-    });
-}
-
 </script>
 
 </body>
